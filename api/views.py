@@ -1,10 +1,10 @@
 """ api/views.py """
 
 from rest_framework import generics, permissions
+from django.contrib.auth.models import User
 from .permissions import IsOwner
-from .serializers import BucketlistSerializer
+from .serializers import BucketlistSerializer, UserSerializer
 from .models import Bucketlist
-
 
 # Create your views here.
 class CreateView(generics.ListCreateAPIView):
@@ -23,3 +23,13 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Bucketlist.objects.all()
     serializer_class = BucketlistSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+class UserView(generics.ListAPIView):
+    """View to list the user queryset."""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetailView(generics.RetrieveAPIView):
+    """View ti retrieve a user instance."""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
